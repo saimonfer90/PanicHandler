@@ -15,7 +15,9 @@ namespace PanicHandler.Data
             _configuration = configuration;
             _bindingsCollection = bindingsCollection;
         }
-
+        /// <summary>
+        /// Refresh in memory the configuration settings
+        /// </summary>
         internal void UpdateBindingsList()
         {
             _bindingsCollection.KeyBindings = _configuration.GetSection("PanicHandler:KeyBindings")

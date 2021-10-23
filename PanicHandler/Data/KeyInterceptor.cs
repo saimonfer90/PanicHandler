@@ -34,12 +34,14 @@ namespace PanicHandler.Data
                 .Where(x => x.CanBeInstalled && x.CanPreventDefault)
                 .ToArray();
 
-            _mouseHook = hooks.OfType<IMouseHook>().First();
+            /*mouse possible future*/
+            /*_mouseHook = hooks.OfType<IMouseHook>().First();*/
+            /*_hookEventsBinder.BindMouseEvents(_mouseHook);*/
+
             _keyboardHook = hooks.OfType<IKeyboardHook>().First();
 
             _hookEventsBinder = _container.GetInstance<HookEventsBinder>();
 
-            _hookEventsBinder.BindMouseEvents(_mouseHook);
             _hookEventsBinder.BindKeyboardEvents(_keyboardHook);
 
             _loop = IMessageLoop.Load(Environment.CurrentDirectory)
@@ -50,7 +52,7 @@ namespace PanicHandler.Data
         {
             CancellationTokenSource source = new();
 
-            Task.Run(() => _loop.Run(source.Token, _mouseHook, _keyboardHook));
+            Task.Run(() => _loop.Run(source.Token, _keyboardHook));
         }
     }
 }

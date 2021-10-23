@@ -72,7 +72,7 @@ namespace PanicHandler
         private void AddApplicationToStartup()
         {
             using RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            key.SetValue("PanicHandler", "\"" + Directory.GetCurrentDirectory() + "\"");
+            key.SetValue("PanicHandler", "\"" + Directory.GetCurrentDirectory() + "\\PanicHandler.exe\"");
         }
 
         private void RemoveApplicationFromStartup()
