@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 using PanicHandler.Data;
 using PanicHandler.Models;
 using Serilog;
 using SimpleInjector;
-using System;
 
 namespace PanicHandler
 {

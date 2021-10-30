@@ -1,15 +1,13 @@
-﻿using GlobalHook.Core.Keyboard;
-using GlobalHook.Core.Mouse;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using GlobalHook.Core.Keyboard;
 using PanicHandler.Models;
 using Serilog;
 using Serilog.Events;
 using SimpleInjector;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PanicHandler.Data
 {
@@ -65,27 +63,13 @@ namespace PanicHandler.Data
             }
         }
 
-        internal void BindMouseEvents(IMouseHook mouseHook)
-        {
-            if (_hookConfig.IsMouseHookEnabled)
-            {
-                mouseHook.OnEvent += (_, e)
-                    => ManageMouseEvent(e);
-            }
-            else
-            {
-                mouseHook.OnEvent -= (_, e)
-                    => ManageMouseEvent(e);
-            }
-        }
-
         /// <summary>
         /// Keyboard event handler: check the keys pressed and do as set by configuration
         /// </summary>
         /// <param name="e"></param>
         private void ManageKeyboardEvent(IKeyboardEventArgs e)
         {
-            void logInfo(string message, IEnumerable<int> array)
+            void logInfo(string message)
             {
                 _logger.Information(message);
 
@@ -110,11 +94,11 @@ namespace PanicHandler.Data
 
                 lock (_locked)
                 {
-                    logInfo($"Binding processed ({binding.Name}):", binding.ShortcutRawKeys);
+                    logInfo($"Binding processed ({binding.Name}):  {binding.ShortcutRawKeys}");
 
                     if (binding.ShortcutRawKeys.TrueForAll(k => _keyPressed.Contains(k)))
                     {
-                        logInfo("Got it! pressed keys: ", _keyPressed);
+                        logInfo($"Got it! pressed keys: {_keyPressed}");
 
                         try
                         {
@@ -127,7 +111,7 @@ namespace PanicHandler.Data
 
                             p.Start();
 
-                            _logger.Information($"End call to process");
+                            _logger.Information("End call to process");
                         }
                         catch (Exception ex)
                         {
@@ -137,22 +121,12 @@ namespace PanicHandler.Data
                     }
                     else
                     {
-                        logInfo("no match for this binding, pressed keys:", _keyPressed.ToList());
+                        logInfo($"no match for this binding, pressed keys: {_keyPressed.ToList()}");
                     }
 
                     _keyPressed.Clear();
                 }
             }
-        }
-
-        /// <summary>
-        /// Mouse event handler: check the keys pressed and do as set by configuration
-        /// </summary>
-        /// <param name="e"></param>
-        private void ManageMouseEvent(IMouseEventArgs e)
-        {
-            //if (e.MouseEventType == MouseEventType.Key && e.Key == MouseButtons.Middle)
-            //    e.PreventDefault();
         }
     }
 }
