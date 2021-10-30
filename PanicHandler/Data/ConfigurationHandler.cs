@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using PanicHandler.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
+using PanicHandler.Models;
 
 namespace PanicHandler.Data
 {
@@ -15,6 +15,7 @@ namespace PanicHandler.Data
             _configuration = configuration;
             _bindingsCollection = bindingsCollection;
         }
+
         /// <summary>
         /// Refresh in memory the configuration settings
         /// </summary>

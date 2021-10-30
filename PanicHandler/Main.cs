@@ -1,10 +1,10 @@
-﻿using Microsoft.Win32;
-using Serilog;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using Microsoft.Win32;
+using Serilog;
 
 namespace PanicHandler
 {

@@ -23,9 +23,6 @@ namespace PanicHandler
 
         internal async Task Run()
         {
-            var interceptor = _serviceContainer.GetInstance<KeyInterceptor>();
-            interceptor.Start();
-
             while (true)
             {
                 _configurationHandler.UpdateBindingsList();
